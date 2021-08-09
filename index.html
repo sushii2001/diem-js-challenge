@@ -16,42 +16,61 @@
           <div class="panel bg-light">
             <div class="panel-body p-3">
               <form action="#">
+
                 <!-- Name -->
                 <div class="form-group">
                   <label class="control-label" for="name">
                     Name:
                   </label>
-                  <input class="form-control" type="text" id="name" name="name" />
+                  <input class="form-control" onfocusin = "nameSelected()" onfocusout = "nameNotSelected()" type="text" id="name" name="name" />
+                  <script>
+                    let input = document.querySelector('input');
+
+                    input.onblur = inputBlur;
+                    input.onfocus = inputFocus;
+
+                    function inputBlur() {
+                      input.value = document.getElementById('name').value;
+                    }
+
+                    function inputFocus() {
+                      input.value = document.getElementById('name').value;
+                    }
+                  </script>
                 </div>
+
                 <!-- Birthday -->
                 <div class="form-group">
                   <label class="control-label" for="birthday">
                     Birthday:
                   </label>
-                  <input class="form-control" id="date" name="date" type="date"/>
+                  <input class="form-control" onfocusin = "dateSelected()" onfocusout = "dateNotSelected()" id="date" name="date" type="date"/>
                 </div>
+
                 <!-- Choose Theme -->
                 <div class="form-group">
                   <label class="control-label mr-3">
                     Choose Theme:
                   </label>
                   <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="modeOptions" id="light" value="Light">
+                    <input class="form-check-input" type="radio" name="modeOptions" id="light" value="Light" checked = "checked">
                     <label class="form-check-label" for="light">Light Mode</label>
                   </div>
                   <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="modeOptions" id="dark" value="Dark">
+                    <input class="form-check-input" type="radio" name="modeOptions" id="dark" value="Dark" >
                     <label class="form-check-label" for="dark">Dark Mode</label>
                   </div>
                 </div>
+
+
                 <!-- Skills -->
-                <div class="form-group">
+                <div class="form-group" id="source">
                   <label class="control-label mr-3">
                     Skills:
                   </label>
-                  <button type="button" class="btn btn-success btn-sm" id="html">HTML</button>
-                  <button type="button" class="btn btn-success btn-sm" id="css">CSS</button>
-                  <button type="button" class="btn btn-success btn-sm" id="javascript">JavaScript</button>
+                  <button type="button" class="btn btn-success btn-sm" id="html" onmouseover="button_hover1()" onmouseleave="button_out1()" onclick="moveHTML()">HTML</button>
+                  <button type="button" class="btn btn-success btn-sm" id="css" onmouseover="button_hover2()" onmouseleave="button_out2()" onclick="moveCSS()" >CSS</button>
+                  <button type="button" class="btn btn-success btn-sm" id="javascript" onmouseover="button_hover3()" onmouseleave="button_out3()" onclick="moveJS()" >JavaScript</button>
                 </div>
 
               </form>
@@ -61,12 +80,154 @@
 
         <!-- THE RIGHT SECTION -->
         <div class="col-12 col-sm-12 col-md-6 h-100">
-          <div class="panel bg-dark text-white">
+          <div class="panel bg-light text-dark" id="theme">
             <div class="panel-body p-3">
+
+              <script>
+
+                function nameSelected() {
+                  if (document.getElementById('name').value == "") {
+                    document.getElementById("nameOutput").innerHTML = "Hello there! What's your name?";
+                  }
+                  else{
+                    document.getElementById("nameOutput").innerHTML = "Hi, " + document.getElementById('name').value + "!";
+                  }
+                }
+                  
+                function nameNotSelected() {
+                  if (document.getElementById('name').value == "") {
+                    document.getElementById("nameOutput").innerHTML = "Hello there! What's your name?";
+                  }
+                  else{
+                    document.getElementById("nameOutput").innerHTML = "Hi, " + document.getElementById('name').value + "!";
+                  }
+                }
+
+                function dateSelected() {
+                  document.getElementById("ageOutput").innerHTML = "Lemme guess, your age is...";
+                }
+
+                function dateNotSelected() {
+                  if (document.getElementById('date').value == "") {
+                    document.getElementById("ageOutput").innerHTML = "Would you mind entering your birthday?";
+                  }
+                  else{
+                    document.getElementById("ageOutput").innerHTML = "Your age is "+ (new Date().getFullYear() - (new Date(document.getElementById('date').value).getFullYear())) + " years old!";
+                  }
+                }
+               
+                const radios = document.getElementsByClassName("form-group");
+                document.body.addEventListener('change', function (e) {
+                  let target = e.target;
+                  switch (target.id) {
+                      case "dark":
+                          darkmode();
+                          document.getElementById("themeOutput").innerHTML = "You choose Dark Mode!"
+                          break;
+                      case "light":
+                          lightmode();
+                          document.getElementById("themeOutput").innerHTML = "You choose Light Mode!"
+                          break;
+                  }
+                });
+
+                function darkmode() {
+                  document.getElementById("theme").className = "bg-dark text-white"
+                }
+           
+                function lightmode() {
+                  document.getElementById("theme").className = "bg-light text-dark"
+                }
+
+                function button_hover1(){
+                  document.getElementById("html").className = "btn btn-danger btn-sm"
+                }
+
+                function button_hover2(){
+                  document.getElementById("css").className = "btn btn-danger btn-sm"
+                }
+
+                function button_hover3(){
+                  document.getElementById("javascript").className = "btn btn-danger btn-sm"
+                }
+                
+                function button_out1(){
+                  document.getElementById("html").className = "btn btn-success btn-sm"
+                }
+
+                function button_out2(){
+                  document.getElementById("css").className = "btn btn-success btn-sm"
+                }
+
+                function button_out3(){
+                  document.getElementById("javascript").className = "btn btn-success btn-sm"
+                }
+
+                function skill_to1(){
+                  document.getElementById("html").className = "btn btn-success btn-sm"
+                }
+
+                function moveHTML() {
+                  var html = document.getElementById("html");
+                  html.style.marginRight = "5px";
+                  var output = document.getElementById("skillsOutput");
+                  var original = document.getElementById("source");
+                  if (output.contains(html)) {
+                    original.appendChild(html);
+                  }
+                  else {
+                    output.appendChild(html);
+                  }
+                }
+
+                function moveCSS() {
+                  var css = document.getElementById("css");
+                  css.style.marginRight = "5px";
+                  var output = document.getElementById("skillsOutput");
+                  var original = document.getElementById("source");
+                  if (output.contains(css)) {
+                    original.appendChild(css);
+                  }
+                  else {
+                    output.appendChild(css);
+                  }
+                }
+
+                function moveJS() {
+                  var js = document.getElementById("javascript");
+                  js.style.marginRight = "5px";
+                  var output = document.getElementById("skillsOutput");
+                  var original = document.getElementById("source");
+                  if (output.contains(js)) {
+                    original.appendChild(js);
+                  }
+                  else {
+                    output.appendChild(js);
+                  }
+                }
+                                 
+              </script>
+
+              <style>
+                .light-mode {
+                  background-color: white;
+                  color: black;
+                }
+
+                .dark-mode {
+                  background-color: black;
+                  color: white;
+                }
+              </style>
+
               <p id="nameOutput"></p>
+
               <p id="ageOutput"></p>
+
               <p id="themeOutput"></p>
+
               <p id="skillsOutput"></p>
+              
             </div>
           </div>
         </div>
