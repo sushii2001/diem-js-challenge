@@ -112,7 +112,13 @@
                     document.getElementById("ageOutput").innerHTML = "Would you mind entering your birthday?";
                   }
                   else{
-                    document.getElementById("ageOutput").innerHTML = "Your age is "+ (new Date().getFullYear() - (new Date(document.getElementById('date').value).getFullYear())) + " years old!";
+                    // document.getElementById("ageOutput").innerHTML = "Your age is "+ (new Date().getFullYear() - (new Date(document.getElementById('date').value).getFullYear())) + " years old!";
+                    var dob = new Date(document.getElementById('date').value);  
+                    var month_diff = Date.now() - dob.getTime();  
+                    var age_dt = new Date(month_diff);   
+                    var year = age_dt.getUTCFullYear();  
+                    var age = Math.abs(year - 1970);  
+                    document.getElementById("ageOutput").innerHTML = "Your age is " + age + " years old!";
                   }
                 }
                
