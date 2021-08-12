@@ -104,7 +104,13 @@
                 }
 
                 function dateSelected() {
-                  document.getElementById("ageOutput").innerHTML = "Lemme guess, your age is...";
+                  if (document.getElementById('date').value == "") {
+                    document.getElementById("ageOutput").innerHTML = "Lemme guess, your age is...";
+                  }
+                  else{
+                    document.getElementById("ageOutput").innerHTML = "Your age is " + age + " years old!"
+                  }
+                  
                 }
 
                 function dateNotSelected() {
